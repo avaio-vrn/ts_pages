@@ -1,0 +1,10 @@
+ru:
+  page: на страницу
+  activerecord:
+    models:
+      accusative:
+        page: страницу
+    attributes:
+      page:
+        in_menu: Отображать в меню
+        image: Загрузить изображение

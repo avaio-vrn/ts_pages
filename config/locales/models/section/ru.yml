@@ -1,0 +1,11 @@
+ru:
+  section: в раздел
+  activerecord:
+    attributes:
+      section:
+        in_menu: Отображать в меню
+        image: Загрузить изображение
+    models:
+      section: Раздел
+      accusative:
+        section: раздел

@@ -1,0 +1,49 @@
+<div class='path-12'>
+  <%= form_for(['admin', @obj], validate: true, html: { class:"form-add js__template-system"} ) do |f| %>
+    <%= render "form_errors", object: f.object %>
+
+    <div class="path-6">
+      <div class="f-a-left">
+        <%= f.label :content_name, class:"f-a-label" %>
+        <%= f.text_field :content_name, class:"f-a-input" %>
+
+        <%= f.label :content_header, class:"f-a-label" %>
+        <%= f.text_field :content_header, class:"f-a-input" %>
+
+        <label class="f-a-checkbox">
+          <%= f.check_box :in_menu %>
+          <span class="f-a-checkbox-span"></span>
+          <%= content_tag :span, f.object.class.human_attribute_name(:in_menu), class:"f-a-label" %>
+        </label>
+      </div>
+
+    </div>
+
+    <div class='path-6 padd-l'>
+      <div class='f-a-right'>
+
+        <%= f.fields_for :image do |i| %>
+          <div class='admin-stroke--no'>
+            <div class='path-3'>
+              <%= image_tag i.object&.url(:thumb), class: 'image-preview js__image-preview' %>
+            </div>
+            <div class='path-1'></div>
+            <div class='path-7'>
+              <%= f.label :file, class: 'f-a-label' %>
+              <div class="f-a-file-container">
+                <span class="button-mid">с компьютера</span>
+                <%= i.file_field :file, class: 'f-a-file'  %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+
+    <div class='clearfloat'></div>
+    <div class="path-6">
+      <%= render "danger_block", f: f, options: @obj.class.form_danger_options %>
+    </div>
+  <% end %>
+</div>

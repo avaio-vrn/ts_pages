@@ -1,0 +1,136 @@
+admin:
+  base:
+    home:
+      actions:
+        primary: [
+          { href_name: 'Разделы', obj: ':sections' },
+          { href_name: 'Добавить раздел',  obj: ':section', arg: { action: ':new' }, br: true },
+          { href_name: 'Базовые страницы', obj: ':pages', href_class: 'icon-page' },
+          { href_name: 'Добавить баз.страницу', obj: ':page', arg: { action: ':new' }, br: true }]
+        additional: [
+          { href_name: 'Настройки', model_engine: ':template_system', namespace: 'template_system', obj: ':settings', href_class: 'icon-gear', br: true },
+          { href_name: 'Пользователи', model_engine: ':authentication_user', namespace: '', obj: ':users', br: true }
+        ]
+      edit_content: true
+  pages:
+    index:
+      actions: []
+      add_index_actions: {}
+      seo_actions: false
+    show:
+      actions:
+        primary: [{ href_name: 'Базовые страницы', obj: ':pages', href_class: 'icon-page' }]
+      add_show_actions: {}
+  sections:
+    index:
+      actions:
+        primary: [{ href_name: 'Добавить подраздел', obj: ':section', arg: { action: ':new', parent_id: '@parent_id' }, br: true }]
+      add_index_actions: {}
+      seo_actions: false
+    show:
+      actions:
+        primary: [
+          { href_name: 'Страницы раздел', obj: ['@section', ':page_sections'] },
+          { href_name: 'Добавить страницу', obj: ['@section', ':page_section'], arg: { action: ':new'}, href_class: 'icon-new', br: true },
+          { href_name: 'Подразделы', obj: ':sections', arg: { parent_id: '@section.id' }},
+          { href_name: 'Добавить подраздел', obj: ':section', arg: { action: ':new', parent_id: '@section.id' }, br: true }]
+      add_show_actions: { opt: { without_new: true }}
+  page_sections:
+    index:
+      actions: []
+      add_index_actions: {}
+      seo_actions: false
+    show:
+      actions:
+        primary: [{ href_name: 'Страницы', obj: ['@section', '::PageSection'], href_class: 'icon-page' }]
+      add_show_actions: {}
+  ###TS ACTIONS --TS ACTIONS --TS ACTIONS --TS ACTIONS --TS ACTIONS --TS ACTIONS --TS ACTIONS --TS ACTIONS
+  default: &blank_actions_without_seo
+    index:
+      actions: []
+      seo_actions: false
+  home:
+    <<: *blank_actions_without_seo
+  sitemap:
+    <<: *blank_actions_without_seo
+    show:
+      actions: []
+      seo_actions: false
+  configurations:
+    index:
+      actions: []
+      add_index_actions: {}
+      seo_actions: false
+biz_info:
+  show:
+    actions:
+      primary: [
+        { href_name: 'Редактировать информацию', module: ':template_system', namespace: '', obj: ':biz_info', arg: { id: ':main', action: ':edit' }},
+        { href_name: 'Редактировать логотип', href_class: ':edit', module: ':template_system', namespace: '', obj: ':biz_info', arg: { id: ':logo', action: ':edit' }, br: true },
+        { href_name: 'Редактировать счетчики', module: ':template_system', namespace: '', obj: ':biz_info', arg: { id: ':seo', action: ':edit' }, br: true },
+        { href_name: 'Настройка СМС', module: ':template_system', namespace: '', obj: ':biz_info', arg: { id: ':sms', action: ':edit' }, br: true }]
+    seo_actions: false
+  edit_logo:
+    actions: []
+    href_save: true
+    seo_actions: false
+template_system:
+  content:
+    show:
+      actions:
+        primary: [
+          { href_name: 'Добавить контент', module: ':template_system', namespace: '', obj: ':template_system_new_template', remote: true,
+            href_class: 'icon-new', arg: { id: '@content.id' }, br: true },
+          { href_name: 'Добавить блок текста', module: ':template_system', namespace: '', obj: ':template_system_new_template', remote: true, 
+            href_class: 'icon-new', arg: { id: '@content.id', block: 1 }, br: true }]
+        additional: [
+          { href_name: 'Пометить все на удаление', module: ':template_system', obj: ':set_del_templates', namespace: 'admin', href_class: "icon-delete",
+            arg: { namespace: 'template_system', md: ':content', md_id: '@content.id', assoc: ':templates', assoc_path: ':template_system_content' }},
+          { href_name: 'Снять все на удаление', module: ':template_system', obj: ':set_del_templates', namespace: 'admin', href_class: "icon-delete icon-cancel-delete",
+          arg: { namespace: 'template_system', md: ':content', md_id: '@content.id', assoc: ':templates', assoc_path: ':template_system_content', cancel: 1 }}]
+      seo_actions: false
+  template_types:
+    index:
+      actions: []
+      add_index_actions: {}
+      seo_actions: false
+  fix_row_num:
+    edit:
+      actions:
+        primary: [
+          { href_name: 'Присвоить автоматически', model_engine: ':template_system', obj: ':fix_row_num',
+            arg: '@args_auto_fix', method: ':post', href_class: 'icon-save', br: true },
+          { href_name: 'Далее без сохранения', model_engine: ':template_system', obj: ':fix_row_num',
+            arg: '@args_cancel_fix', method: ':post', href_class: 'icon-abort' }]
+      seo_actions: false
+###TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT --TS LAYOUT
+theme:
+  index:
+    actions:
+      primary: [{ href_name: 'Редактировать макет', obj: ':edit_theme', href_class: "icon-edit", remote: true, br: true }]
+      additional: [{ href_name: 'Редактировать css стили', obj: ':edit_theme_styles', href_class: "icon-edit", br: true}]
+    href_save: true
+    seo_actions: false
+  theme_styles:
+    index:
+      actions:
+        primary: []
+      href_save: true
+      seo_actions: false
+###AUTHENTICATION USER -- AUTHENTICATION USER -- AUTHENTICATION USER -- AUTHENTICATION USER -- AUTHENTICATION USER
+users:
+  index:
+    add_index_actions: {}
+    seo_actions: false
+  show:
+    add_show_actions: {}
+    seo_actions: false
+###SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO -- SEO
+seo:
+  meta_tags:
+    index:
+      actions: 
+        primary: [
+          { href_name: 'Title добавить мета', href_class: "icon-new", remote: true, arg: { action: 'new', seo_meta_tag: '@title_params'}, br: true },
+          { href_name: 'Description добавить мета', href_class: "icon-new", remote: true, arg: { action: 'new', seo_meta_tag: '@description_params' }, br: true }]
+      seo_actions: false
